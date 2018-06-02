@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 import re
-version = "0.0.16"
+version = "0.0.20"
 
 setup(
     name='ahui_aiohttp_server',
@@ -14,8 +14,8 @@ setup(
         #'console_scripts': ['aiohttp_server=pyhttp_server:main', ],
     },
 
-    description = "Aiohttp Server for both static and python file",
-    long_description="Aiohttp Server for both static and python file",
+    description = "Simple aiohttp Server for both static and python file",
+    long_description=open('README.md').read(),
     author = "ahuigo",
     author_email = "nobody@qq.com",
     license = "MIT",

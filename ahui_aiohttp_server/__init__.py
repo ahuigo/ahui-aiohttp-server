@@ -3,7 +3,8 @@ from pathlib import Path
 from contextlib import redirect_stdout
 import asyncio 
 from aiohttp import web
-import logging; 
+import asyncio
+import logging 
 logging.basicConfig(level=logging.INFO)
 
 import argparse
@@ -15,7 +16,7 @@ args = parser.parse_args()
 '''
 wsgi application
 '''
-def index(request):
+async def index(request):
     print(request.match_info)
     path = request.path[1:]
     if '..' in path:
@@ -29,12 +30,21 @@ def index(request):
             code = open(path).read()
             exec(code)
             _locals=locals()
-            if 'aiohttp_app' in _locals:
-                return _locals['aiohttp_app'](request)
-            elif 'echo_app' in locals():
-                _locals['echo_app'](request)
+            res = None
+            if 'aiohttp_handler' in _locals:
+                res = _locals['aiohttp_handler'](request)
+            if res:
+                if asyncio.iscoroutine(res):
+                    logging.info('use async coroutine')
+                    res = await res
+                if isinstance(res, web.Response):
+                    logging.info('Get Web.Response')
+                    return res
+                else:
+                    logging.info('Get string')
+                    return web.Response(body=str(res))
         out = f.getvalue()
-        return web.Response(body=out.encode())
+        return web.Response(body=out)
     else:
         return web.FileResponse(f'./{path}')
 
