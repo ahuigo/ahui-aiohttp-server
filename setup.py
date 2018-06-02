@@ -15,7 +15,7 @@ setup(
     },
 
     description = "Aiohttp Server for both static and python file",
-    long_description="Aiohttp Server for both static and python file"
+    long_description="Aiohttp Server for both static and python file",
     author = "ahuigo",
     author_email = "nobody@qq.com",
     license = "MIT",
