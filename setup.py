@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 import re
-version = "0.0.20"
+version = "0.0.21"
 
 setup(
     name='ahui_aiohttp_server',

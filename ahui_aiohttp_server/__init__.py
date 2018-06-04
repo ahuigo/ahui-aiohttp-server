@@ -23,8 +23,8 @@ async def index(request):
         return web.Response(status=500, body='Insecured path')
     if not os.path.exists(path):
         return web.Response(status=404, body=f'not path:{path}'.encode())
-    if path.endswith('.py'):
-        logging.info('Excute python:'+path)
+    if path.endswith('.py') :
+        logging.info('Execute path:'+path)
         f = io.StringIO()
         with redirect_stdout(f):
             code = open(path).read()
@@ -44,6 +44,10 @@ async def index(request):
                     logging.info('Get string')
                     return web.Response(body=str(res))
         out = f.getvalue()
+        return web.Response(body=out)
+    elif path.endswith('.php'):
+        from subprocess import check_output
+        out = check_output(['php', path])
         return web.Response(body=out)
     else:
         return web.FileResponse(f'./{path}')
