@@ -1,5 +1,6 @@
 # Ahui-aiohttp-server
-This  simple server extends `python -m http.server`:
+This is a simple http async server which extends `python -m http.server`.\
+(WARN: It's recommended for development and testing and not for production environments):
 - Support print to http response (same as php)
 - Support async-await
 
@@ -31,6 +32,8 @@ List files in current dir:
 
     $ curl http://127.0.0.1:5000/app/echo1.py
     Hello World!
+
+If you want to get request data(such as: `get, post, cookie, ...`, use `aiohttp_handler(request)` instead:
 
     $ cat echo2.py
     def aiohttp_handler(request):
