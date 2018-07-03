@@ -12,8 +12,8 @@ This is a simple http async server which extends `python -m http.server`.\
 ## Usage
 ### Start server
 
-    $ python -m ahui-aiohttp-server
-    $ python -m ahui-aiohttp-server --host 127.0.0.1 --port 5000
+    $ python -m ahui_aiohttp_server
+    $ python -m ahui_aiohttp_server --host 127.0.0.1 --port 5000
 
 ### Access server
 List files in current dir:
