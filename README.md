@@ -10,8 +10,7 @@ This is a simple http async server which extends `python -m http.server`.\
     pip install ahui-aiohttp-server
     pip3 install ahui-aiohttp-server
 
-## Usage
-### Start server
+## Start server
 
     $ tree .
     ./
@@ -25,9 +24,9 @@ This is a simple http async server which extends `python -m http.server`.\
     $ python -m ahui_aiohttp_server
     $ python -m ahui_aiohttp_server --host 127.0.0.1 --port 5000
 
-### Access server
+## Access server
 
-#### Access via echo server(php-like):
+### Access via echo server(php-like):
 
     $ cat app/echo1.py
     print('Hello World!')
@@ -48,7 +47,7 @@ If you want to get request data(such as: `get, post, cookie, ...`, use `aiohttp_
     $ curl http://127.0.0.1:5000/app/echo2.py?var=value
     {'var':'value'}
 
-#### Access via normal aiohttp server:
+### Access via normal aiohttp server:
 
     $ cat app/return.py
     from aiohttp import web
@@ -59,7 +58,7 @@ If you want to get request data(such as: `get, post, cookie, ...`, use `aiohttp_
     $ curl http://127.0.0.1:5000/app/return.py?var=value - 'k1=v2'
     {'k1':'v2'}
 
-#### Access static file:
+### Access static file:
 
     $ curl http://127.0.0.1:5000/js/test.js
     <js content>
