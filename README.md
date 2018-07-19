@@ -1,8 +1,9 @@
 # Ahui-aiohttp-server
 This is a simple http async server which extends `python -m http.server`.\
 (WARN: It's recommended for development and testing and not for production environments):
-- Support print to http response (same as php)
+- Support print to http response directly (same as php's echo)
 - Support async-await
+- Support php, python
 
 ## Install
 
@@ -12,30 +13,35 @@ This is a simple http async server which extends `python -m http.server`.\
 ## Usage
 ### Start server
 
+    $ tree .
+    ./
+        app/
+            echo1.py
+            echo2.py
+            echo.php
+            return.py
+        js/
+            test.js
     $ python -m ahui_aiohttp_server
     $ python -m ahui_aiohttp_server --host 127.0.0.1 --port 5000
 
 ### Access server
-List files in current dir:
-
-    app/
-        echo1.py
-        echo2.py
-        return.py
-    js/
-        test.js
 
 #### Access via echo server(php-like):
 
-    $ cat echo1.py
+    $ cat app/echo1.py
     print('Hello World!')
 
     $ curl http://127.0.0.1:5000/app/echo1.py
     Hello World!
+    $ curl http://127.0.0.1:5000/js/test.js
+    <js content>
+    $ curl http://127.0.0.1:5000/app/echo.php
+    <js content>
 
 If you want to get request data(such as: `get, post, cookie, ...`, use `aiohttp_handler(request)` instead:
 
-    $ cat echo2.py
+    $ cat app/echo2.py
     def aiohttp_handler(request):
         print(request.query)    # use print 
 
@@ -44,7 +50,7 @@ If you want to get request data(such as: `get, post, cookie, ...`, use `aiohttp_
 
 #### Access via normal aiohttp server:
 
-    $ cat return.py
+    $ cat app/return.py
     from aiohttp import web
     async def aiohttp_handler(request):
         data = await request.post()
@@ -56,6 +62,7 @@ If you want to get request data(such as: `get, post, cookie, ...`, use `aiohttp_
 #### Access static file:
 
     $ curl http://127.0.0.1:5000/js/test.js
+    <js content>
 
 ## Required
 1. aiohttp
