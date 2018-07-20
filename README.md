@@ -1,6 +1,6 @@
 # Ahui-aiohttp-server
 This is a simple http async server which extends `python -m http.server`.\
-(WARN: It's recommended for development and testing and not for production environments):
+(WARN: It's not recommended  for production environments, just use it  in development or testing environments only!):
 - Support print to http response directly (same as php's echo)
 - Support async-await
 - Support php, python
