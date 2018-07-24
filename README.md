@@ -1,4 +1,7 @@
 # Ahui-aiohttp-server
+[![](https://img.shields.io/pypi/pyversions/ahui_aiohttp_server.svg?longCache=True)](https://pypi.org/pypi/ahui_aiohttp_server/)
+[![](https://img.shields.io/pypi/v/ahui_aiohttp_server.svg?maxAge=36000)](https://pypi.org/pypi/ahui_aiohttp_server/)
+
 This is a simple http async server which extends `python -m http.server`.\
 (WARN: It's not recommended  for production environments, just use it  in development or testing environments only!):
 - Support print to http response directly (same as php's echo)
