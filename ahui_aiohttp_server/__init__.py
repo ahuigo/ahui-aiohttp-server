@@ -1,21 +1,28 @@
-import sys,os,io,json, time
+import sys
+import os
+import io
+import json
+import time
 from pathlib import Path
 from contextlib import redirect_stdout
-import asyncio 
+import asyncio
 from aiohttp import web
 import asyncio
-import logging 
+import logging
+import sys
 logging.basicConfig(level=logging.INFO)
 
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-ho", "--host", default='127.0.0.1', )
-parser.add_argument("-p", "--port", type=int,default=5000)
+parser.add_argument("-p", "--port", type=int, default=5000)
 args = parser.parse_args()
 
 '''
 wsgi application
 '''
+
+
 async def index(request):
     print(request.match_info)
     path = request.path[1:]
@@ -23,13 +30,13 @@ async def index(request):
         return web.Response(status=500, body='Insecured path')
     if not os.path.exists(path):
         return web.Response(status=404, body=f'not path:{path}'.encode())
-    if path.endswith('.py') :
+    if path.endswith('.py'):
         logging.info('Execute path:'+path)
         f = io.StringIO()
         with redirect_stdout(f):
             code = open(path).read()
             exec(code)
-            _locals=locals()
+            _locals = locals()
             res = None
             if 'aiohttp_handler' in _locals:
                 res = _locals['aiohttp_handler'](request)
@@ -50,11 +57,19 @@ async def index(request):
         out = check_output(['php', path])
         return web.Response(body=out)
     else:
-        return web.FileResponse(f'./{path}')
+        ext = os.path.splitext(path)[1]
+        headers = {}
+        if ext == 'html':
+            headers = {'Content-Type': 'text/html'}
+        elif ext == 'js':
+            headers = {'Content-Type': 'application/javascript'}
+        return web.FileResponse(f'./{path}', headers=headers)
 
 '''
 wsgi server
 '''
+
+
 async def init(loop):
     port = args.port
     host = args.host
@@ -68,5 +83,3 @@ async def init(loop):
 loop = asyncio.get_event_loop()
 loop.run_until_complete(init(loop))
 loop.run_forever()
-
-

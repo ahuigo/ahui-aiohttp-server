@@ -2,7 +2,6 @@ from setuptools import setup, find_packages
 import os
 import re
 from os import path as op
-version = "0.1.13"
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -20,7 +19,7 @@ def _read(fname='README.md', line=None):
 
 setup(
     name='ahui_aiohttp_server',
-    version=version,
+    version="0.1.15",
     install_requires=['aiohttp', ],
     packages=['ahui_aiohttp_server'],
     py_modules=['ahui_aiohttp_server'],
