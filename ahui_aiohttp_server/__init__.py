@@ -57,12 +57,20 @@ async def index(request):
         out = check_output(['php', path])
         return web.Response(body=out)
     else:
-        ext = os.path.splitext(path)[1]
+        ext = os.path.splitext(path)[1][1:]
         headers = {}
-        if ext == 'html':
-            headers = {'Content-Type': 'text/html'}
-        elif ext == 'js':
-            headers = {'Content-Type': 'application/javascript'}
+        exts = {
+                'html': 'text/html',
+                'htm': 'text/html',
+                'js': 'application/javascript',
+                'md': 'text/plain',
+            }
+        if ext in exts:
+            headers = {'Content-Type': exts[ext]}
+        else:
+            #headers = {'Content-Type': 'text/plain'}
+            headers = {}
+        print(headers,ext)
         return web.FileResponse(f'./{path}', headers=headers)
 
 '''

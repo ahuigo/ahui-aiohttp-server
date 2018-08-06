@@ -19,7 +19,7 @@ def _read(fname='README.md', line=None):
 
 setup(
     name='ahui_aiohttp_server',
-    version="0.1.15",
+    version="0.1.16",
     install_requires=['aiohttp', ],
     packages=['ahui_aiohttp_server'],
     py_modules=['ahui_aiohttp_server'],
