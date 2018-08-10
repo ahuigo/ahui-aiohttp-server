@@ -63,6 +63,7 @@ async def index(request):
                 'html': 'text/html',
                 'htm': 'text/html',
                 'js': 'application/javascript',
+                'mjs': 'application/javascript',
                 'md': 'text/plain',
             }
         if ext in exts:
