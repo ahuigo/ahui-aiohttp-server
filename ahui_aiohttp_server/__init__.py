@@ -16,6 +16,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-ho", "--host", default='127.0.0.1', )
 parser.add_argument("-p", "--port", type=int, default=5000)
+parser.add_argument("-d", "--dir", type=str, default='.')
 args = parser.parse_args()
 
 '''
@@ -57,6 +58,8 @@ async def index(request):
         out = check_output(['php', path])
         return web.Response(body=out)
     else:
+        if '.' not in path:
+            path += '.html'
         ext = os.path.splitext(path)[1][1:]
         headers = {}
         exts = {
@@ -82,6 +85,7 @@ wsgi server
 async def init(loop):
     port = args.port
     host = args.host
+    os.chdir(args.dir)
     app = web.Application(loop=loop)
     app.router.add_route('*', '/{tail:.*}', index)
     srv = await loop.create_server(app.make_handler(), host, port)
