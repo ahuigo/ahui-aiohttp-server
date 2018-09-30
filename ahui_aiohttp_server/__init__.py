@@ -29,8 +29,7 @@ async def index(request):
     path = request.path[1:]
     if '..' in path:
         return web.Response(status=500, body='Insecured path')
-    if not os.path.exists(path):
-        return web.Response(status=404, body=f'not path:{path}'.encode())
+    #if not os.path.exists(path): return web.Response(status=404, body=f'not path:{path}'.encode())
     if path.endswith('.py'):
         logging.info('Execute path:'+path)
         f = io.StringIO()
@@ -58,7 +57,7 @@ async def index(request):
         out = check_output(['php', path])
         return web.Response(body=out)
     else:
-        if '.' not in path:
+        if not os.path.exists(path): #return web.Response(status=404, body=f'not path:{path}'.encode())
             path += '.html'
         ext = os.path.splitext(path)[1][1:]
         headers = {}
@@ -74,7 +73,7 @@ async def index(request):
         else:
             #headers = {'Content-Type': 'text/plain'}
             headers = {}
-        print(headers,ext)
+        print({'heades':headers,'ext':ext,'path':path})
         return web.FileResponse(f'./{path}', headers=headers)
 
 '''
