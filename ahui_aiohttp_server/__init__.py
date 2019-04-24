@@ -26,6 +26,7 @@ wsgi application
 
 async def index(request):
     print(request.match_info)
+    #print(await request.post())
     path = request.path[1:]
     if '..' in path:
         return web.Response(status=500, body='Insecured path')
@@ -39,6 +40,7 @@ async def index(request):
             _locals = locals()
             res = None
             if 'aiohttp_handler' in _locals:
+                logging.info('Execute aiohttp_handler')
                 res = _locals['aiohttp_handler'](request)
             if res:
                 if asyncio.iscoroutine(res):
@@ -47,7 +49,7 @@ async def index(request):
                 if isinstance(res, web.Response):
                     logging.info('Get Web.Response')
                     return res
-                else:
+                elif res is not None:
                     logging.info('Get string')
                     return web.Response(body=str(res))
         out = f.getvalue()
